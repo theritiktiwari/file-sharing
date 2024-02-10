@@ -32,9 +32,19 @@ bun install
 Then, create a `.env.local` file in the root directory of the project and add the following environment variables:
 
 ```env
-MONGODB_URI=
-MONGODB_DB=
-JWT_SECRET=
+GITHUB_ID=
+GITHUB_SECRET=
+
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+
+EMAIL_SERVER_USER=
+EMAIL_SERVER_PASSWORD=
+EMAIL_SERVER_HOST=
+EMAIL_SERVER_PORT=
+EMAIL_FROM=
+
+DATABASE_URL=
 ```
 
 Then, run the development server:
