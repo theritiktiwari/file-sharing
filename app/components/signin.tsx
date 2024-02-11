@@ -12,10 +12,10 @@ export function SignInComponents() {
         <div className="flex flex-col gap-2 mt-3 md:flex-row">
             <Button onClick={() => signIn('github', {
                 callbackUrl: window.location.origin
-            })} className="w-full" variant={"outline"}>Login with GitHub</Button>
+            })} className="w-full" variant={"secondary"}>Login with GitHub</Button>
             <Button onClick={() => signIn('google', {
                 callbackUrl: window.location.origin
-            })} className="w-full" variant={"outline"}>Login with Google</Button>
+            })} className="w-full" variant={"secondary"}>Login with Google</Button>
         </div>
     </>
 };
