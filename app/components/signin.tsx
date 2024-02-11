@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -22,8 +22,10 @@ export function SignInComponents() {
 
 export function SignInWithEmail() {
     const [email, setEmail] = useState<null | string>(null);
+    const [loading, setLoading] = useState<boolean>(false);
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e: SyntheticEvent) => {
+        e.preventDefault();
         if (!email) {
             return toast({
                 title: "Error",
@@ -31,13 +33,16 @@ export function SignInWithEmail() {
                 variant: "destructive"
             });
         }
+
+        setLoading(true);
         const result = await signIn('email', {
             email: email,
             callbackUrl: window.location.origin,
             redirect: false
         });
+        setLoading(false);
 
-        if(!result?.ok){
+        if (!result?.ok) {
             return toast({
                 title: "Error",
                 description: "Something went wrong. Please try again.",
@@ -51,13 +56,15 @@ export function SignInWithEmail() {
         });
     }
     return <>
-        <form action={handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-y-2">
                 <Label>Email</Label>
                 <Input type="email" name="email" placeholder="name@example.com"
                     onChange={(e) => setEmail(e.target.value)} />
             </div>
-            <Button type="submit" variant={"default"} className="w-full mt-3">Login with Email</Button>
+            <Button disabled={loading} variant={"default"} className="w-full mt-3">
+                {loading ? "Processing..." : "Login with Email"}
+            </Button>
         </form>
     </>
 }
