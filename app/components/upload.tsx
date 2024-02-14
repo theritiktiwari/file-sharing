@@ -16,7 +16,7 @@ const checkEmail = (email: string) => {
     return re.test(email);
 }
 
-export default function Upload() {
+export default function Upload({ session }: { session: any }) {
     const [loading, setLoading] = useState<boolean>(false);
     const [file, setFile] = useState<File | null>(null);
     const [CID, setCID] = useState<string | null>(null);
@@ -52,35 +52,34 @@ export default function Upload() {
         try {
             const formData = new FormData();
             formData.append("file", file, file.name);
-            const data = {
-                emails: JSON.stringify(emailList),
-            }
+
+            const ownerEmail = session?.user?.email;
+            const all_emails = [...emailList, ownerEmail];
+            formData.append("emails", JSON.stringify(all_emails));
 
             setLoading(true);
-            const req = await axios.post("/api/files", formData, {
-                data: data,
-            });
+            const req = await axios.post("/api/files", formData);
             const res = await req.data;
             setLoading(false);
 
             if (res?.type === "success") {
                 setFile(null);
+                setEmailList([]);
                 setCID(res?.data?.IpfsHash);
             }
-
-            console.log(res);
 
             toast({
                 title: res?.type.charAt(0).toUpperCase() + res?.type.slice(1),
                 description: res?.message,
                 variant: res?.type === "success" ? "success" : "destructive",
-            })
+            });
         } catch (e: any) {
             toast({
                 title: "Error",
-                description: e.message,
+                description: e?.response?.data?.message || e.message,
                 variant: "destructive",
-            })
+            });
+            setLoading(false);
         }
     }
 
@@ -135,9 +134,12 @@ export default function Upload() {
                         <span className="text-sm"><span className='font-semibold'>Selected:</span> {file?.name}</span>
                         <div className='flex justify-center items-center gap-5 mt-1'>
                             <Button disabled={loading} size={"sm"} onClick={() => setFile(null)} variant="destructive">Remove File</Button>
-                            {/* <Button disabled={loading} size={"sm"} onClick={() => handleSubmit(file)} variant="default">{loading && "Uploading..." || "Upload File"}</Button> */}
-                            <Button size={"sm"} onClick={() => handleSubmit(file)} variant="default">{loading && "Uploading..." || "Upload File"}</Button>
+                            <Button disabled={loading} size={"sm"} onClick={() => handleSubmit(file)} variant="default">{loading && "Uploading..." || "Upload File"}</Button>
                         </div>
+                    </> : CID ? <>
+                        <a href={`https://gateway.ipfs.io/ipfs/${CID}#x-ipfs-companion-no-redirect`} target="_blank" rel="noopener noreferrer">
+                            <Button variant={"success"}>Open File</Button>
+                        </a>
                     </> : <p className="font-bold text-lg md:text-xl">Send File</p>}
                 </div>
             </Card>

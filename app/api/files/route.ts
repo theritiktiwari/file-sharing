@@ -10,11 +10,11 @@ const generateSecretCode = () => {
     return randomString;
 };
 
-export const config = {
-    api: {
-        bodyParser: false,
-    },
-};
+// export const config = {
+//     api: {
+//         bodyParser: false,
+//     },
+// };
 
 const saveFile = async (file: any) => {
     try {
@@ -36,6 +36,7 @@ const saveFile = async (file: any) => {
 export async function POST(request: NextRequest, res: any) {
     try {
         const formData = await request.formData();
+        
         const file = formData.get("file") as Blob | null;
         if (!file) {
             return NextResponse.json({
@@ -44,43 +45,43 @@ export async function POST(request: NextRequest, res: any) {
             }, { status: 400 });
         }
 
-        console.log({ file, r: request.body.emails });
-        // get the emails array from the form data
-        // const emails = JSON.parse(formData.get("emails") as string);
-        // if (!emails || emails?.length === 0) {
-        //     return NextResponse.json({
-        //         type: "error",
-        //         message: "Email is required.",
-        //     }, { status: 400 });
-        // }
+        const emails = JSON.parse(formData.get("emails") as string);
+        if (!emails || emails?.length === 0 || emails?.length === 1) {
+            return NextResponse.json({
+                type: "error",
+                message: "Email is required.",
+            }, { status: 400 });
+        }
 
-        // console.log({ file, emails });
+        const userToken = generateSecretCode();
+        const saveData = await saveFile(file);
 
-        // const userToken = generateSecretCode();
-        // const saveData = await saveFile(file);
-        // const saveData = {};
+        if (!saveData?.IpfsHash) {
+            return NextResponse.json({
+                type: "error",
+                message: "File not uploaded.",
+            }, { status: 500 });
+        }
 
-        // if (!saveData?.IpfsHash) {
-        //     return NextResponse.json({
-        //         type: "error",
-        //         message: "File not uploaded.",
-        //     }, { status: 500 });
-        // }
+        const jwt_secret = process.env.JWT_SECRET;
+        const jwtToken = saveData?.IpfsHash && jwt_secret && jwt.sign({ hash: saveData?.IpfsHash, emails }, jwt_secret);
 
-        // console.log({ saveData });
+        if (jwtToken && userToken) {
+            // add the data to smart contract
+        }
 
-        // const jwtToken = saveData?.IpfsHash && jwt.sign({ hash: saveData?.IpfsHash, emails }, process.env.JWT_SECRET);
-
-        // if (jwtToken && userToken) {
-        //     // add the data to smart contract
-        // }
+        const finalData = {
+            ...saveData,
+            jwtToken,
+            userToken,
+            emails,
+        }
 
         return NextResponse.json({
             type: "success",
             message: "File uploaded successfully.",
-            // data: saveData
+            data: finalData
         }, { status: 200 });
-
     } catch (error: any) {
         return NextResponse.json({
             type: "error",

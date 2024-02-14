@@ -12,7 +12,7 @@ export default async function Page() {
     return <>
         <div className="h-[85vh] flex flex-col md:flex-row justify-center md:justify-around items-center gap-20">
             <div className="flex flex-col items-center">
-                <Upload />
+                <Upload session={session} />
             </div>
             <div>
                 <Card className="w-[320px] h-[320px] md:w-[350px] md:h-[350px] flex flex-col justify-center items-center">
