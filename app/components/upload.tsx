@@ -137,7 +137,7 @@ export default function Upload({ session }: { session: any }) {
                             <Button disabled={loading} size={"sm"} onClick={() => handleSubmit(file)} variant="default">{loading && "Uploading..." || "Upload File"}</Button>
                         </div>
                     </> : CID ? <>
-                        <a href={`https://gateway.ipfs.io/ipfs/${CID}#x-ipfs-companion-no-redirect`} target="_blank" rel="noopener noreferrer">
+                        <a href={`https://gateway.ipfs.io/ipfs/${CID}`} target="_blank" rel="noopener noreferrer">
                             <Button variant={"success"}>Open File</Button>
                         </a>
                     </> : <p className="font-bold text-lg md:text-xl">Send File</p>}
