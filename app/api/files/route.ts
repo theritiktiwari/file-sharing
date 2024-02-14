@@ -2,13 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import pinataSDK from "@pinata/sdk";
 import { Readable } from "stream";
-import { execSync } from "child_process";
+// import { execSync } from "child_process";
 const pinata = new pinataSDK({ pinataJWTKey: process.env.PINATA_JWT });
 
-const generateSecretCode = () => {
-    const randomString = execSync('openssl rand -hex 32').toString();
-    return randomString;
-};
+// const generateSecretCode = () => {
+//     const randomString = execSync('openssl rand -hex 32').toString();
+//     return randomString;
+// };
 
 // export const config = {
 //     api: {
@@ -53,7 +53,7 @@ export async function POST(request: NextRequest, res: any) {
             }, { status: 400 });
         }
 
-        const userToken = generateSecretCode();
+        // const userToken = generateSecretCode();
         const saveData = await saveFile(file);
 
         if (!saveData?.IpfsHash) {
@@ -66,14 +66,13 @@ export async function POST(request: NextRequest, res: any) {
         const jwt_secret = process.env.JWT_SECRET;
         const jwtToken = saveData?.IpfsHash && jwt_secret && jwt.sign({ hash: saveData?.IpfsHash, emails }, jwt_secret);
 
-        if (jwtToken && userToken) {
+        if (jwtToken) {
             // add the data to smart contract
         }
 
         const finalData = {
             ...saveData,
             jwtToken,
-            userToken,
             emails,
         }
 
