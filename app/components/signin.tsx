@@ -21,7 +21,7 @@ export function SignInComponents() {
 };
 
 export function SignInWithEmail() {
-    const [email, setEmail] = useState<null | string>(null);
+    const [email, setEmail] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
 
     const handleSubmit = async (e: SyntheticEvent) => {
@@ -49,17 +49,18 @@ export function SignInWithEmail() {
                 variant: "destructive"
             });
         }
-
+        setEmail("");
         return toast({
             title: "Success",
             description: "Email sent to your email address. Please check your inbox.",
+            variant: "success"
         });
     }
     return <>
         <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-y-2">
                 <Label>Email</Label>
-                <Input type="email" name="email" placeholder="name@example.com"
+                <Input type="email" value={email} name="email" placeholder="name@example.com"
                     onChange={(e) => setEmail(e.target.value)} />
             </div>
             <Button disabled={loading} variant={"default"} className="w-full mt-3">

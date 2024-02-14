@@ -25,7 +25,7 @@ export default async function Home() {
         <p className="mb-4 text-gray-400 text-center mt-4 text-md md:text-xl max-w-2xl font-medium">
           This is a file sharing system using blockchain technology to ease the process of file sharing and increase the security of the files.
         </p>
-        <Button asChild className="text-xl p-6">
+        <Button asChild size={"lg"} className="text-lg">
           <Link href="/auth">Login</Link>
         </Button>
       </div>
