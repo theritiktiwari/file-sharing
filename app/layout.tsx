@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     default: 'Home | BFS System',
   },
   description: 'This is the portal for blockchain file-sharing system.',
-  metadataBase: new URL('http://localhost:3000/'),
+  metadataBase: new URL('https://bfs-system.vercel.app/'),
 };
 
 export default function RootLayout({
