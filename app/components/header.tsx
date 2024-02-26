@@ -1,7 +1,9 @@
 import {
     CreditCard,
+    File,
     Keyboard,
     LifeBuoy,
+    LogOut,
     User,
 } from "lucide-react"
 import {
@@ -33,18 +35,18 @@ export default async function Header() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-56">
                             <DropdownMenuGroup>
-                                <DropdownMenuItem className="cursor-pointer">
-                                    <User className="mr-2 h-4 w-4" />
-                                    <span>Profile</span>
-                                </DropdownMenuItem>
-                                {/* <DropdownMenuItem className="cursor-pointer" disabled>
-                                    <CreditCard className="mr-2 h-4 w-4" />
-                                    <span>Billing</span>
-                                </DropdownMenuItem> */}
-                                {/* <DropdownMenuItem className="cursor-pointer" disabled>
-                                    <Keyboard className="mr-2 h-4 w-4" />
-                                    <span>Statistics</span>
-                                </DropdownMenuItem> */}
+                                <Link href={"/dashboard/user"}>
+                                    <DropdownMenuItem className="cursor-pointer">
+                                        <User className="mr-2 h-4 w-4" />
+                                        <span>Profile</span>
+                                    </DropdownMenuItem>
+                                </Link>
+                                <Link href={"/dashboard/user/files"}>
+                                    <DropdownMenuItem className="cursor-pointer">
+                                        <File className="mr-2 h-4 w-4" />
+                                        <span>Your Files</span>
+                                    </DropdownMenuItem>
+                                </Link>
                             </DropdownMenuGroup>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem className="cursor-pointer">
@@ -53,10 +55,6 @@ export default async function Header() {
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <SignOut />
-                            {/* <DropdownMenuItem className="cursor-pointer text-destructive" onClick={SignOut}>
-                                <LogOut className="mr-2 h-4 w-4" />
-                                <span>Log out</span>
-                            </DropdownMenuItem> */}
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>

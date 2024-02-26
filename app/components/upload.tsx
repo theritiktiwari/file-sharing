@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { XCircle } from 'lucide-react';
 import clsx from 'clsx';
+import { CopyFileCode } from '@/app/components/editprofile';
 
 const checkEmail = (email: string) => {
     const re = /\S+@\S+\.\S+/;
@@ -19,7 +20,7 @@ const checkEmail = (email: string) => {
 export default function Upload({ session }: { session: any }) {
     const [loading, setLoading] = useState<boolean>(false);
     const [file, setFile] = useState<File | null>(null);
-    const [CID, setCID] = useState<string | null>(null);
+    const [code, setCode] = useState<string | null>(null);
     const [email, setEmail] = useState<string>('');
     const [emailList, setEmailList] = useState<string[]>([]);
 
@@ -65,7 +66,7 @@ export default function Upload({ session }: { session: any }) {
             if (res?.type === "success") {
                 setFile(null);
                 setEmailList([]);
-                setCID(res?.data?.IpfsHash);
+                setCode(res?.data?.userToken);
             }
 
             toast({
@@ -136,10 +137,11 @@ export default function Upload({ session }: { session: any }) {
                             <Button disabled={loading} size={"sm"} onClick={() => setFile(null)} variant="destructive">Remove File</Button>
                             <Button disabled={loading} size={"sm"} onClick={() => handleSubmit(file)} variant="default">{loading && "Uploading..." || "Upload File"}</Button>
                         </div>
-                    </> : CID ? <>
-                        <a href={`https://gateway.ipfs.io/ipfs/${CID}`} target="_blank" rel="noopener noreferrer">
-                            <Button variant={"success"}>Open File</Button>
-                        </a>
+                    </> : code ? <>
+                        <div className="flex justify-around items-center w-full">
+                            <span className="text-success font-bold">File Uploaded</span>
+                            <CopyFileCode code={code} />
+                        </div>
                     </> : <p className="font-bold text-lg md:text-xl">Send File</p>}
                 </div>
             </Card>
