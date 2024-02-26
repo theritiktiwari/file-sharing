@@ -7,14 +7,10 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 
-// TODO: Implement the Receive component
-// FIXME: Maybe we can use server side rendering to get the file
-
 export default function Download() {
     const [code, setCode] = useState<null | string>(null);
-    const [loading, setLoading] = useState<boolean>(false);
     const { push: redirect } = useRouter();
-    
+
     const handleSubmit = async (e: SyntheticEvent) => {
         e.preventDefault();
         if (!code) {
@@ -25,14 +21,7 @@ export default function Download() {
             });
         }
 
-        // setLoading(true);
-        // const result = await signIn('email', {
-        //     email: email,
-        //     callbackUrl: window.location.origin,
-        //     redirect: false
-        // });
-        // setLoading(false);
-        redirect("/dashboard/file");
+        redirect(`/dashboard/file?id=${code}`);
     }
 
     return <>
@@ -42,8 +31,8 @@ export default function Download() {
                 <Input type="text" name="code" placeholder="Enter the secret code"
                     onChange={(e) => setCode(e.target.value)} />
             </div>
-            <Button type="submit" disabled={loading} variant={"default"} className="w-full mt-3">
-                {loading ? "Processing..." : "Find the File"}
+            <Button type="submit" variant={"default"} className="w-full mt-3">
+                Find the File
             </Button>
         </form>
     </>
