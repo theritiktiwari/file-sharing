@@ -38,7 +38,7 @@ export default async function Page() {
     return (
         <Authentication>
             <div>
-                <h1 className=" mt-5 text-3xl text-center font-bold">Profile</h1>
+                <h1 className="mt-5 text-3xl text-center font-bold">Profile</h1>
                 <Table className="md:w-[50%] mx-auto mt-10">
                     <TableCaption>Refresh or Login again for better user experience.</TableCaption>
                     <TableBody>
