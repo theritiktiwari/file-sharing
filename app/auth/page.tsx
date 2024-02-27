@@ -11,7 +11,7 @@ export default async function Page() {
     }
 
     return <>
-        <div className="w-screen h-screen flex items-center justify-center">
+        <div className="px-5 w-screen h-screen flex items-center justify-center">
             <Card>
                 <CardHeader>
                     <CardTitle>Sign In</CardTitle>

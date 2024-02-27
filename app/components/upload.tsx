@@ -51,6 +51,13 @@ export default function Upload({ session }: { session: any }) {
 
     const handleSubmit = async (file: File) => {
         try {
+            if (session?.user?.email === undefined) {
+                return toast({
+                    title: "Error",
+                    description: "Not Loggedin. Please login to upload file.",
+                    variant: "destructive"
+                });
+            }
             const formData = new FormData();
             formData.append("file", file, file.name);
 

@@ -36,7 +36,7 @@ export default function Instructions() {
 
                     <li className="font-bold text-xl mt-3">5. Security and Privacy:</li>
                     <ul className="ml-5">
-                        <li>• Never share your access code with anyone you don't trust.</li>
+                        <li>• Never share your access code with anyone you don&apos;t trust.</li>
                         <li>• Be cautious when downloading executable files (e.g., .exe, .bat).</li>
                     </ul>
                 </ul>
