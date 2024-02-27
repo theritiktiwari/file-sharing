@@ -2,11 +2,12 @@
 import prisma from "@/app/utils/db";
 
 // Save the file to the database
-export async function saveFileToDB(userId: any, key: string) {
+export async function saveFileToDB(userId: string, key: string, secretToken: string) {
     const file = await prisma.file?.create({
         data: {
             userId,
-            key
+            key,
+            secretToken
         }
     });
     return file;
@@ -20,12 +21,12 @@ export async function getAllFiles(userId: string) {
     return files;
 }
 
-// get the single file by id
-export async function getFileById(id: string) {
-    const file = await prisma.file?.findUnique({
-        where: { id }
+// get the single file by key
+export async function getFileById(key: string) {
+    const file = await prisma.file?.findMany({
+        where: { key }
     });
-    return file;
+    return file[0];
 }
 
 // get user details by email
