@@ -49,10 +49,12 @@ export default async function Header() {
                                 </Link>
                             </DropdownMenuGroup>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem className="cursor-pointer">
-                                <LifeBuoy className="mr-2 h-4 w-4" />
-                                <span>Support</span>
-                            </DropdownMenuItem>
+                            <Link href={"/dashboard/instructions"}>
+                                <DropdownMenuItem className="cursor-pointer">
+                                    <LifeBuoy className="mr-2 h-4 w-4" />
+                                    <span>Instructions</span>
+                                </DropdownMenuItem>
+                            </Link>
                             <DropdownMenuSeparator />
                             <SignOut />
                         </DropdownMenuContent>
