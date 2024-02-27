@@ -56,10 +56,11 @@ model VerificationToken {
 }
 
 model File {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  key       String
-  createdAt DateTime @default(now())
-  userId    String
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  key           String
+  createdAt     DateTime @default(now())
+  userId        String
+  secretToken  String
 
-  user      User     @relation(fields: [userId], references: [id])
+  user          User     @relation(fields: [userId], references: [id])
 }
